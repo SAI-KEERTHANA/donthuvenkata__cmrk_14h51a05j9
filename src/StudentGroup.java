@@ -153,11 +153,31 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public void removeToIndex(int index) {
 		// Add your implementation here
+		if(index < 0 || index >= this.students.length)
+			throw new IllegalArgumentException();
+		Student[] students = new Student[this.students.length - index];
+		int j,i=0;
+		for(j=index;j<this.students.length;j++)
+			students[i++] = this.students[j];		
+		this.students = students;
 	}
 
 	@Override
 	public void removeToElement(Student student) {
-		// Add your implementation here
+		// Add your implementation here 
+		if(student == null)
+			throw new IllegalArgumentException();
+		int j;
+		for(j=0;j<this.students.length;j++)
+			if(this.students[j].equals(student))
+				break;
+		if(j==this.students.length)
+			return;
+		int index = j,i=0;
+		Student[] students = new Student[this.students.length-index];
+		while(j<this.students.length)
+			students[i++] = this.students[j++];		
+		this.students = students;
 	}
 
 	@Override
@@ -207,8 +227,19 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public Student[] getStudentsWithMaxAvgMark() {
-		// Add your implementation here
-		return null;
+		// Add your implementation 
+		if(this.students.length < 1)
+			return null;
+		StudentGroup max_students;
+		double max_avg = this.students[0].getAvgMark();
+		for(int index = 1; index < this.students.length; index++)
+			if(this.students[index].getAvgMark()>max_avg)
+				max_avg = this.students[index].getAvgMark();
+		max_students = new StudentGroup(1);// what did v do here?
+		for(int index = 0; index < this.students.length; index++)
+			if(this.students[index].getAvgMark()==max_avg)
+				max_students.addLast(this.students[index]);
+		return max_students.getStudents();
 	}
 
 	@Override
