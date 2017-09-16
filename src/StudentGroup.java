@@ -198,13 +198,41 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getByBirthDate(Date date) {
 		// Add your implementation here
-		return null;
+		if(date==null)
+			throw new IllegalArgumentException();
+		StudentGroup  birth = null;
+		for(int index=0;index<this.students.length;index++){
+			if(!this.students[index].getBirthDate().after(date)){
+				if(birth == null){
+					birth = new StudentGroup(1);
+					birth.setStudent(this.students[index],0);
+				}
+				else{
+					birth.addLast(this.students[index]);
+				}
+			}
+		}
+		return birth.getStudents();
 	}
 
 	@Override
 	public Student[] getBetweenBirthDates(Date firstDate, Date lastDate) {
 		// Add your implementation here
-		return null;
+		if(firstDate==null || lastDate == null)
+			throw new IllegalArgumentException();
+		StudentGroup  birth = null;
+		for(int index=0;index<this.students.length;index++){
+			if(!this.students[index].getBirthDate().before(firstDate) && !this.students[index].getBirthDate().after(lastDate)){
+				if(birth == null){
+					birth = new StudentGroup(1);
+					birth.setStudent(this.students[index],0);
+				}
+				else{
+					birth.addLast(this.students[index]);
+				}
+			}
+		}
+		return birth.getStudents();
 	}
 
 	@Override
@@ -222,7 +250,7 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getStudentsByAge(int age) {
 		// Add your implementation here
-		return null;
+	return null;
 	}
 
 	@Override
